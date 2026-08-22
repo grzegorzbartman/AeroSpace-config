@@ -131,6 +131,9 @@ The default layout uses a `12px` gap. If the configured gap is `g`, a screen wit
 makaron-gaps 12
 ```
 
+> [!TIP]
+> On a small screen (13-inch MacBook), many people prefer `makaron-gaps 0` - every pixel goes to your windows. Also worth knowing there: `alt-comma` switches the workspace to the accordion layout (windows stacked almost full-width), which fits small screens better than side-by-side tiles; `alt-slash` switches back.
+
 ### Manual Commands
 
 - **Reload config**: `makaron-reload-aerospace-sketchybar`
