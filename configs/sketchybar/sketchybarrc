@@ -56,7 +56,7 @@ if [ "$SKETCHYBAR_LOGO" = "true" ]; then
                    background.color=0x00000000 \
                    background.image="$CONFIG_DIR/assets/${MAKARON_LOGO_IMAGE:-makaron-m@2x.png}" \
                    background.image.scale=0.5 \
-                   click_script="sketchybar --set makaron_logo popup.drawing=toggle" \
+                   click_script="$PLUGIN_DIR/makaron_logo_click.sh" \
                    popup.background.color=$BAR_COLOR \
                    popup.background.corner_radius=12 \
                    popup.background.blur_radius=${BAR_BLUR:-0} \

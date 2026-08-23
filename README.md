@@ -197,7 +197,7 @@ makaron-reload-aerospace-sketchybar
 
 Keyboard shortcuts are configured in `configs/aerospace/.aerospace.toml`.
 
-Press `alt-shift-/` (that is: `?`) anytime to open the shortcut overlay - a floating glass panel listing every binding, generated live from your config so it always matches what is actually bound, including your own overrides. Press it again or `esc` to close. Also available from the Makaron menu in the bar (Shortcuts).
+Press `alt-shift-/` (that is: `?`) anytime to open the shortcut overlay - a floating glass panel listing every binding, generated live from your config so it always matches what is actually bound, including your own overrides. Close it with the close button, `esc`, or by pressing the shortcut again. You can also open it by clicking the M mark in the bar (right click opens the Makaron menu).
 
 Highlights:
 - `alt-1..0`, `alt-q/w` - Switch workspaces
