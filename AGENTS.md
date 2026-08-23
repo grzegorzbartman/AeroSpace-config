@@ -96,7 +96,7 @@ Two mutually exclusive modes, persisted in `~/.local/state/makaron/ui-mode`:
 
 ### Layout Commands
 - `makaron-gaps <0-40>` and `makaron-gaps-zero` - Persist and apply AeroSpace gaps.
-- `makaron-help` - Keyboard shortcut overlay (bound to alt-shift-slash, also in the Makaron menu). Parses the live generated AeroSpace config (user overrides included) into HTML and shows it in the `makaron-help-window` glass panel; unknown user commands render verbatim. Second invocation closes the panel (toggle); falls back to the browser when the binary is missing. `--print-html` writes the HTML to stdout (tests).
+- `makaron-help` - Keyboard shortcut overlay (bound to alt-shift-slash; also left click on the bar's M mark). The panel has a macOS-style close button; esc, click-away, or a second invocation also close it. Parses the live generated AeroSpace config (user overrides included) into HTML and shows it in the `makaron-help-window` glass panel; unknown user commands render verbatim. Second invocation closes the panel (toggle); falls back to the browser when the binary is missing. `--print-html` writes the HTML to stdout (tests).
 
 ### System Commands
 - `makaron-update` - Resets installed repo to the latest release tag (`stable` channel, default) or `origin/main` (`edge`), runs migrations, reloads UI. `--stable`/`--edge` persist the channel in `MAKARON_CHANNEL` (makaron.conf).
@@ -165,7 +165,7 @@ ALERT_COLOR, ALERT_BACKGROUND_COLOR
 ```
 
 ### Key Plugins
-- **makaron_menu.sh** - Version label for the `makaron_logo` popup (the bar's "Apple menu": outline M mark from `configs/sketchybar/assets/`, first item on the left, gated by `SKETCHYBAR_LOGO`; popup has Shortcuts / Update / Doctor / Reload bar).
+- **makaron_menu.sh** - Version label for the `makaron_logo` popup (the bar's "Apple menu": outline M mark from `configs/sketchybar/assets/`, first item on the left, gated by `SKETCHYBAR_LOGO`; left click opens the shortcut overlay via `plugins/makaron_logo_click.sh`, right click opens the popup: Shortcuts / Update / Doctor / Reload bar).
 - **aerospace.sh** - Workspace indicator with animated (`--animate sin 12`) three-level hierarchy: focused = accent pill + app icons, occupied = quiet pill + app icons, empty = bare dimmed number. Icons use Nerd Font. Multi-monitor aware via `$MONITOR` parameter. On `aerospace_workspace_change` it only refreshes workspaces matching `$FOCUSED_WORKSPACE` or `$PREV_WORKSPACE`; all other senders fall through to the full refresh path. Honors `SKETCHYBAR_HIDE_EMPTY_WORKSPACES` from `makaron.conf` (focused workspace is always drawn).
 - **battery.sh** - Battery status with low-threshold warning from `makaron.conf`.
 - **memory.sh** - Calls compiled Swift binary `makaron-memory-stats`, shows `X/Y GB`.

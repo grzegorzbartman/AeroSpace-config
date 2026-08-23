@@ -24,6 +24,9 @@ if defaults read -g AppleInterfaceStyle >/dev/null 2>&1; then
 
     export ALERT_COLOR=0xfff87171
     export ALERT_BACKGROUND_COLOR=0x33f87171
+
+    # White-outline M reads on the dark glass
+    export MAKARON_LOGO_IMAGE=makaron-m@2x.png
 else
     # Light: translucent glass, dark text, system blue
     export BAR_COLOR=0x66f5f5f7
@@ -46,6 +49,9 @@ else
 
     export ALERT_COLOR=0xffef4444
     export ALERT_BACKGROUND_COLOR=0x26ef4444
+
+    # Ink-outline M matches the dark glyphs on the light glass
+    export MAKARON_LOGO_IMAGE=makaron-m-ink@2x.png
 fi
 
 # User color overrides (sourced by sketchybarrc and every plugin)

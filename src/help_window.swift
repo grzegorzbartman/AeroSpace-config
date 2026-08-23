@@ -11,6 +11,44 @@ final class HelpPanel: NSPanel {
     override var canBecomeKey: Bool { true }
 }
 
+// macOS traffic-light close button (red circle, x on hover)
+final class CloseButton: NSView {
+    var onClick: (() -> Void)?
+    private var hovered = false { didSet { needsDisplay = true } }
+
+    override init(frame: NSRect) {
+        super.init(frame: frame)
+        addTrackingArea(NSTrackingArea(rect: .zero,
+            options: [.mouseEnteredAndExited, .activeAlways, .inVisibleRect],
+            owner: self))
+    }
+    required init?(coder: NSCoder) { fatalError() }
+
+    override func mouseEntered(with event: NSEvent) { hovered = true }
+    override func mouseExited(with event: NSEvent) { hovered = false }
+    override func mouseDown(with event: NSEvent) { onClick?() }
+
+    override func draw(_ dirtyRect: NSRect) {
+        let circle = NSBezierPath(ovalIn: bounds.insetBy(dx: 0.5, dy: 0.5))
+        NSColor(srgbRed: 1.0, green: 0.373, blue: 0.341, alpha: 1).setFill() // #FF5F57
+        circle.fill()
+        NSColor.black.withAlphaComponent(0.2).setStroke()
+        circle.lineWidth = 0.5
+        circle.stroke()
+        if hovered {
+            let inset: CGFloat = bounds.width * 0.3
+            let x = NSBezierPath()
+            x.move(to: NSPoint(x: inset, y: inset))
+            x.line(to: NSPoint(x: bounds.width - inset, y: bounds.height - inset))
+            x.move(to: NSPoint(x: inset, y: bounds.height - inset))
+            x.line(to: NSPoint(x: bounds.width - inset, y: inset))
+            NSColor(white: 0.2, alpha: 0.85).setStroke()
+            x.lineWidth = 1.1
+            x.stroke()
+        }
+    }
+}
+
 final class Delegate: NSObject, NSApplicationDelegate {
     var panel: HelpPanel!
     var closing = false
@@ -65,6 +103,14 @@ final class Delegate: NSObject, NSApplicationDelegate {
         web.autoresizingMask = [.width, .height]
         web.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
         glass.addSubview(web)
+
+        let closeSize: CGFloat = 13
+        let close = CloseButton(frame: NSRect(x: 13, y: rect.height - closeSize - 13,
+                                              width: closeSize, height: closeSize))
+        close.autoresizingMask = [.minYMargin]
+        close.onClick = { [weak self] in self?.dismiss() }
+        glass.addSubview(close)
+
         panel.contentView = glass
 
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] e in
