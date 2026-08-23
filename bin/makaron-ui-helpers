@@ -90,20 +90,25 @@ reload_current_ui() {
 # (~1s) makes this expensive to repeat; invalidated on monitor hotplug.
 _notch_probe() {
     if [ ! -f "$NOTCH_CACHE_FILE" ]; then
-        local result
+        local result="" fmt='^[01] [0-9]+$'
         if [ -x "$MAKARON_PATH/bin/makaron-has-notch" ]; then
             result=$("$MAKARON_PATH/bin/makaron-has-notch" 2>/dev/null)
-        else
+        fi
+        # No binary, or a stale one with the old output format: slow interpreter fallback
+        if ! [[ "$result" =~ $fmt ]]; then
             result=$(swift -e 'import AppKit
 if let s = NSScreen.screens.first(where: { $0.safeAreaInsets.top > 0 }) {
     print("1 \(max(Int((s.frame.maxY - s.visibleFrame.maxY).rounded()), 0))")
 } else { print("0 0") }' 2>/dev/null)
         fi
-        case "$result" in
-            "1 "*|"0 "*) ;;
-            *) result="0 0" ;;
-        esac
-        echo "$result" > "$NOTCH_CACHE_FILE" 2>/dev/null || true
+        if [[ "$result" =~ $fmt ]]; then
+            echo "$result" > "$NOTCH_CACHE_FILE" 2>/dev/null || true
+        else
+            # Probe failed: assume no notch but never cache it, so the next call retries
+            result="0 0"
+        fi
+        echo "$result"
+        return
     fi
     cat "$NOTCH_CACHE_FILE" 2>/dev/null || echo "0 0"
 }

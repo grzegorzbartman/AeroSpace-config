@@ -2,13 +2,18 @@
 # Storage alert for SketchyBar (APFS-aware): hidden below the threshold,
 # shown as a warning pill when the disk is nearly full.
 
+MAKARON_PATH="${MAKARON_PATH:-$HOME/.local/share/makaron}"
 source "$CONFIG_DIR/colors.sh"
 
 STORAGE_ALERT_THRESHOLD=90
 [ -f "$HOME/.config/makaron/makaron.conf" ] && . "$HOME/.config/makaron/makaron.conf"
 case "$STORAGE_ALERT_THRESHOLD" in (*[!0-9]*|"") STORAGE_ALERT_THRESHOLD=90 ;; esac
 
-USED_PCT=$(df -H /System/Volumes/Data 2>/dev/null | tail -1 | awk '{print $5}' | tr -d '%')
+# Finder-style used% (purgeable space counts as free); df fallback
+USED_PCT=$("$MAKARON_PATH/bin/makaron-storage-stats" 2>/dev/null)
+case "$USED_PCT" in (*[!0-9]*|"")
+  USED_PCT=$(df -H /System/Volumes/Data 2>/dev/null | tail -1 | awk '{print $5}' | tr -d '%') ;;
+esac
 case "$USED_PCT" in (*[!0-9]*|"") USED_PCT=0 ;; esac
 
 STATE_FILE="/tmp/sketchybar_$(id -u)_storage_alert"
