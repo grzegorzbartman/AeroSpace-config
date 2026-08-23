@@ -54,7 +54,7 @@ if [ "$SKETCHYBAR_LOGO" = "true" ]; then
                    padding_left=6 padding_right=14 width=40 \
                    background.drawing=on \
                    background.color=0x00000000 \
-                   background.image="$CONFIG_DIR/assets/makaron-m@2x.png" \
+                   background.image="$CONFIG_DIR/assets/${MAKARON_LOGO_IMAGE:-makaron-m@2x.png}" \
                    background.image.scale=0.5 \
                    click_script="sketchybar --set makaron_logo popup.drawing=toggle" \
                    popup.background.color=$BAR_COLOR \
