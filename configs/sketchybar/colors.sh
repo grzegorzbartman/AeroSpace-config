@@ -54,6 +54,10 @@ else
     export MAKARON_LOGO_IMAGE=makaron-m-ink@2x.png
 fi
 
+# Update pill: solid brand amber with ink text, readable on any wallpaper
+export UPDATE_COLOR=0xff1c1c1e
+export UPDATE_BACKGROUND_COLOR=0xfff59e0b
+
 # User color overrides (sourced by sketchybarrc and every plugin)
 # shellcheck disable=SC1090
 [ -f "$HOME/.config/makaron/colors.user.sh" ] && source "$HOME/.config/makaron/colors.user.sh"
