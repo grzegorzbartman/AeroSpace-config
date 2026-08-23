@@ -162,6 +162,8 @@ SPACE_ICON_COLOR, SPACE_LABEL_COLOR, SPACE_BACKGROUND_COLOR, SPACE_BORDER_COLOR
 SPACE_FOCUSED_ICON_COLOR, SPACE_FOCUSED_LABEL_COLOR, SPACE_FOCUSED_BACKGROUND_COLOR, SPACE_FOCUSED_BORDER_COLOR
 # Threshold alerts (cpu/memory/storage pills, low battery)
 ALERT_COLOR, ALERT_BACKGROUND_COLOR
+# Update pill (solid brand amber, ink text; same in both modes)
+UPDATE_COLOR, UPDATE_BACKGROUND_COLOR
 ```
 
 ### Key Plugins
@@ -172,7 +174,7 @@ ALERT_COLOR, ALERT_BACKGROUND_COLOR
 - **cpu.sh** / **memory.sh** - Always visible (CPU percent, memory `X/Y GB`); label turns `ALERT_COLOR` above `CPU_ALERT_THRESHOLD` / `MEMORY_ALERT_THRESHOLD` (80%).
 - **storage.sh** - Threshold alert: invisible below `STORAGE_ALERT_THRESHOLD` (90%); above, an `ALERT_*`-tinted pill appears. Used% comes from `makaron-storage-stats` (Finder-style, purgeable counts as free) with a `df` fallback.
 - **volume.sh** - Detects Bluetooth vs speakers (caches `system_profiler` result for 5s), different icons. Icon-only at rest; a volume change or output-device switch lights the section in the accent color with the percent label for 3s, then eases back.
-- **update_check.sh** - `makaron_update` item, hidden unless the installed repo is behind its channel target (fetches every 4h and on wake); click runs `makaron-update` in Ghostty.
+- **update_check.sh** - `makaron_update` item: amber "Update" pill on the left next to the M mark, hidden unless the installed repo is behind its channel target (fetches every 4h and on wake); click runs `makaron-update` in Ghostty. Colors from `UPDATE_COLOR`/`UPDATE_BACKGROUND_COLOR`.
 - **display_change.sh** - Invalidates display caches and reapplies layout on every display topology change; reloads SketchyBar when monitor count changes.
 
 ### SketchyBar Plugin Conventions

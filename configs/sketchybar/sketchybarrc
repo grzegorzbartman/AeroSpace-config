@@ -80,6 +80,22 @@ if [ "$SKETCHYBAR_LOGO" = "true" ]; then
                    click_script="sketchybar --set makaron_logo popup.drawing=off; $HOME/.local/share/makaron/bin/makaron-reload-aerospace-sketchybar"
 fi
 
+##### Update Indicator #####
+# Amber pill next to the M mark; hidden unless a newer release (or main on
+# edge) is available. Click runs makaron-update in a new Ghostty window.
+sketchybar --add item makaron_update left \
+           --set makaron_update update_freq=14400 drawing=off \
+                       padding_right=15 \
+                       icon="󰚰" icon.color=$UPDATE_COLOR \
+                       icon.padding_left=8 icon.padding_right=2 \
+                       label="Update" label.color=$UPDATE_COLOR \
+                       label.padding_left=2 label.padding_right=8 \
+                       background.drawing=on background.corner_radius=12 background.height=24 \
+                       background.color=$UPDATE_BACKGROUND_COLOR \
+                       script="$PLUGIN_DIR/update_check.sh" \
+                       click_script="open -na Ghostty --args -e $HOME/.local/share/makaron/bin/makaron-update" \
+           --subscribe makaron_update system_woke
+
 ##### Adding AeroSpace Workspace Indicators #####
 # Integration with AeroSpace window manager
 # https://nikitabobko.github.io/AeroSpace/goodness#show-aerospace-workspaces-in-sketchybar
@@ -176,14 +192,6 @@ sketchybar --add item clock right \
                        icon= icon.padding_left=6 icon.padding_right=2 \
                        label.padding_left=2 label.padding_right=6 \
                        script="$PLUGIN_DIR/clock.sh"
-
-# Update indicator: hidden unless a newer release (or main on edge) is available
-sketchybar --add item makaron_update right \
-           --set makaron_update update_freq=14400 drawing=off \
-                       icon.padding_left=4 icon.padding_right=4 label.drawing=off \
-                       script="$PLUGIN_DIR/update_check.sh" \
-                       click_script="open -na Ghostty --args -e $HOME/.local/share/makaron/bin/makaron-update" \
-           --subscribe makaron_update system_woke
 
 sketchybar --add item spacer_time right \
            --set spacer_time width=5 background.drawing=off icon.drawing=off label.drawing=off \
