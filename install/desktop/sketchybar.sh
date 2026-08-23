@@ -16,6 +16,14 @@ if [ -f "$MAKARON_PATH/src/memory_stats.swift" ]; then
     }
 fi
 
+# Compile storage stats binary (Finder-style used%, counts purgeable as free)
+if [ -f "$MAKARON_PATH/src/storage_stats.swift" ]; then
+    echo "Compiling storage_stats..."
+    swiftc -O -o "$MAKARON_PATH/bin/makaron-storage-stats" "$MAKARON_PATH/src/storage_stats.swift" 2>/dev/null || {
+        echo "Warning: Failed to compile storage_stats.swift, falling back to df"
+    }
+fi
+
 # Compile notch detection binary (avoids slow `swift -e` cold start)
 if [ -f "$MAKARON_PATH/src/has_notch.swift" ]; then
     echo "Compiling has_notch..."

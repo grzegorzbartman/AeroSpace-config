@@ -75,6 +75,7 @@ Makaron compiles small Swift helpers (e.g. `swiftc -O -o bin/makaron-memory-stat
 ### Why Swift
 - `memory_stats.swift` uses Mach `host_statistics64` API to match Activity Monitor exactly. Shell-based alternatives (`vm_stat`, `top`) give inaccurate numbers.
 - `has_notch.swift` reads `NSScreen.safeAreaInsets` for notch detection (compiled to avoid the ~1s `swift -e` cold start).
+- `storage_stats.swift` uses `volumeAvailableCapacityForImportantUsage` to count purgeable space (e.g. Time Machine local snapshots) as free, matching Finder. `df` treats purgeable as used and over-reports.
 - `help_window.swift` is the shortcut overlay panel (`bin/makaron-help-window`): borderless NSPanel + WKWebView over NSVisualEffectView glass; AeroSpace ignores non-standard panels so it is never tiled.
 
 ---
@@ -169,7 +170,7 @@ ALERT_COLOR, ALERT_BACKGROUND_COLOR
 - **battery.sh** - Battery status with low-threshold warning from `makaron.conf`.
 - **memory.sh** - Calls compiled Swift binary `makaron-memory-stats`, shows `X/Y GB`.
 - **cpu.sh** / **memory.sh** - Always visible (CPU percent, memory `X/Y GB`); label turns `ALERT_COLOR` above `CPU_ALERT_THRESHOLD` / `MEMORY_ALERT_THRESHOLD` (80%).
-- **storage.sh** - Threshold alert: invisible below `STORAGE_ALERT_THRESHOLD` (90%); above, an `ALERT_*`-tinted pill appears.
+- **storage.sh** - Threshold alert: invisible below `STORAGE_ALERT_THRESHOLD` (90%); above, an `ALERT_*`-tinted pill appears. Used% comes from `makaron-storage-stats` (Finder-style, purgeable counts as free) with a `df` fallback.
 - **volume.sh** - Detects Bluetooth vs speakers (caches `system_profiler` result for 5s), different icons. Icon-only at rest; a volume change or output-device switch lights the section in the accent color with the percent label for 3s, then eases back.
 - **update_check.sh** - `makaron_update` item, hidden unless the installed repo is behind its channel target (fetches every 4h and on wake); click runs `makaron-update` in Ghostty.
 - **display_change.sh** - Invalidates display caches and reapplies layout on every display topology change; reloads SketchyBar when monitor count changes.
