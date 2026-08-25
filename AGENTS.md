@@ -170,9 +170,7 @@ UPDATE_COLOR, UPDATE_BACKGROUND_COLOR
 - **makaron_menu.sh** - Version label for the `makaron_logo` popup (the bar's "Apple menu": outline M mark from `configs/sketchybar/assets/`, first item on the left, gated by `SKETCHYBAR_LOGO`; left click opens the shortcut overlay via `plugins/makaron_logo_click.sh`, right click opens the popup: Shortcuts / Update / Doctor / Reload bar).
 - **aerospace.sh** - Workspace indicator with animated (`--animate sin 12`) three-level hierarchy: focused = accent pill + app icons, occupied = quiet pill + app icons, empty = bare dimmed number. Icons use Nerd Font. Multi-monitor aware via `$MONITOR` parameter. On `aerospace_workspace_change` it only refreshes workspaces matching `$FOCUSED_WORKSPACE` or `$PREV_WORKSPACE`; all other senders fall through to the full refresh path. Honors `SKETCHYBAR_HIDE_EMPTY_WORKSPACES` from `makaron.conf` (focused workspace is always drawn).
 - **battery.sh** - Battery status with low-threshold warning from `makaron.conf`.
-- **memory.sh** - Calls compiled Swift binary `makaron-memory-stats`, shows `X/Y GB`.
-- **cpu.sh** / **memory.sh** - Always visible (CPU percent, memory `X/Y GB`); label turns `ALERT_COLOR` above `CPU_ALERT_THRESHOLD` / `MEMORY_ALERT_THRESHOLD` (80%).
-- **storage.sh** - Threshold alert: invisible below `STORAGE_ALERT_THRESHOLD` (90%); above, an `ALERT_*`-tinted pill appears. Used% comes from `makaron-storage-stats` (Finder-style, purgeable counts as free) with a `df` fallback.
+- **cpu.sh** / **memory.sh** / **storage.sh** - Always visible (CPU percent, memory `X/Y GB`, disk used%); label turns `ALERT_COLOR` above `CPU_ALERT_THRESHOLD` / `MEMORY_ALERT_THRESHOLD` (80%) / `STORAGE_ALERT_THRESHOLD` (90%). Disk used% comes from `makaron-storage-stats` (Finder-style, purgeable counts as free) with a `df` fallback.
 - **volume.sh** - Detects Bluetooth vs speakers (caches `system_profiler` result for 5s), different icons. Icon-only at rest; a volume change or output-device switch lights the section in the accent color with the percent label for 3s, then eases back.
 - **update_check.sh** - `makaron_update` item: amber "Update" pill on the left next to the M mark, hidden unless the installed repo is behind its channel target (fetches every 4h and on wake); click runs `makaron-update` in Ghostty. Colors from `UPDATE_COLOR`/`UPDATE_BACKGROUND_COLOR`.
 - **display_change.sh** - Invalidates display caches and reapplies layout on every display topology change; reloads SketchyBar when monitor count changes.
@@ -320,7 +318,7 @@ AEROSPACE_SWIPE_NATURAL=true            # Swipe direction; true matches macOS (s
 AEROSPACE_GAP_SIZE=12                   # Persistent gap (0-40)
 SKETCHYBAR_HEIGHT=40                    # Bar height (20-80); outer.top adapts
 SKETCHYBAR_LOGO=true                    # Makaron menu (outline M mark) on the left
-STORAGE_ALERT_THRESHOLD=90              # Show storage item only above this disk usage (%)
+STORAGE_ALERT_THRESHOLD=90              # Storage label turns alert color above this usage (%)
 CPU_ALERT_THRESHOLD=80                  # CPU label turns alert color above this usage (%)
 MEMORY_ALERT_THRESHOLD=80               # Memory label turns alert color above this usage (%)
 AEROSPACE_AUTO_DWINDLE=true             # Dwindle auto-layout for new windows

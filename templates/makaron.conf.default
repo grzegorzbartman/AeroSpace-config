@@ -28,10 +28,8 @@ SKETCHYBAR_HEIGHT=40
 SKETCHYBAR_LOGO=true
 
 
-# SketchyBar: show the storage item only above this disk usage (%)
+# SketchyBar: storage / CPU / memory labels turn the alert color above these thresholds (%)
 STORAGE_ALERT_THRESHOLD=90
-
-# SketchyBar: CPU / memory labels turn the alert color above these thresholds (%)
 CPU_ALERT_THRESHOLD=80
 MEMORY_ALERT_THRESHOLD=80
 
