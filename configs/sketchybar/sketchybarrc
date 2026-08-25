@@ -215,19 +215,16 @@ sketchybar --add item spacer_time right \
            --set spacer_status width=5 background.drawing=off icon.drawing=off label.drawing=off
 
 if [ "$SKETCHYBAR_COMPACT_MODE" != "true" ]; then
-  # CPU and memory are always visible (alert color above their thresholds).
-  # Storage is a threshold alert: hidden until the disk crosses its limit,
-  # then a warning-tinted pill appears.
-  sketchybar --add item memory right \
+  # CPU, memory and storage are always visible (alert color above their
+  # thresholds). Storage used% matches Finder (purgeable counts as free).
+  sketchybar --add item storage right \
+             --set storage update_freq=60 icon=󰋊 icon.padding_left=4 icon.padding_right=2 \
+                           label.padding_left=0 label.padding_right=4 \
+                           script="$PLUGIN_DIR/storage.sh" \
+             --add item memory right \
              --set memory update_freq=5 icon=󰍛 icon.padding_left=4 icon.padding_right=2 \
                           label.padding_left=0 label.padding_right=4 \
                           script="$PLUGIN_DIR/memory.sh" \
-             --add item storage right \
-             --set storage update_freq=60 icon=󰋊 drawing=off \
-                           icon.padding_left=8 icon.padding_right=2 \
-                           label.padding_left=2 label.padding_right=8 \
-                           background.drawing=on background.corner_radius=12 background.height=24 \
-                           script="$PLUGIN_DIR/storage.sh" \
              --add item cpu right \
              --set cpu update_freq=5 icon=󰻠 icon.padding_left=6 icon.padding_right=2 \
                        label.padding_left=0 label.padding_right=4 \
@@ -235,9 +232,9 @@ if [ "$SKETCHYBAR_COMPACT_MODE" != "true" ]; then
 fi
 
 ##### Brackets for visual grouping #####
-# Group 1: System (CPU + Memory) — omitted in SKETCHYBAR_COMPACT_MODE
+# Group 1: System (CPU + Memory + Storage) — omitted in SKETCHYBAR_COMPACT_MODE
 if [ "$SKETCHYBAR_COMPACT_MODE" != "true" ]; then
-  sketchybar --add bracket system_bracket cpu memory \
+  sketchybar --add bracket system_bracket cpu memory storage \
              --set system_bracket background.color=$SPACE_BACKGROUND_COLOR \
                                   background.corner_radius=12 \
                                   background.height=24

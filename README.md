@@ -327,7 +327,7 @@ AEROSPACE_SWIPE_NATURAL=true            # Use the natural macOS swipe direction
 AEROSPACE_GAP_SIZE=12                    # Window gap in pixels (0-40)
 CPU_ALERT_THRESHOLD=80                   # CPU turns alert color above this usage (%)
 MEMORY_ALERT_THRESHOLD=80                # Memory turns alert color above this usage (%)
-STORAGE_ALERT_THRESHOLD=90               # Show disk only above this usage (%)
+STORAGE_ALERT_THRESHOLD=90               # Disk label turns alert color above this usage (%)
 ```
 
 ## Contributing
